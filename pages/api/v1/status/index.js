@@ -3,7 +3,7 @@
 // Método .send() não envia o charset (tipo de teclado utilizado) automaticamente
 // Método .json() envia o charset automaticamente (utf-8)
 
-import database from "infra/database.js";
+import database from "infra/database";
 
 async function status(request, response) {
   const updateAt = new Date().toISOString();
