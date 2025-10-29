@@ -2,7 +2,7 @@ import { Client } from 'pg';
 
 const sslConfig = process.env.POSTGRES_HOST === 'localhost'
   ? false // Se for localhost, NÃO use SSL
-  : { rejectUnauthorized: false }; // Para TUDO mais (Neon, etc), use SSL
+  : { rejectUnauthorized: false };
 
 async function query(queryObject) {
   let client;
