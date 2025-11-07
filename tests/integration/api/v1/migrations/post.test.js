@@ -11,7 +11,7 @@ test("POST to /api/v1/migrations should return 200", async () => {
     method: 'POST',
   });
   expect(responseA.status).toBe(201);
-
+  
   const responseABody = await responseA.json();
 
   expect(Array.isArray(responseABody)).toBe(true);
