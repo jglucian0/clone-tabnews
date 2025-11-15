@@ -15,7 +15,8 @@
     "test:watch": "jest --watchAll --runInBand",
     "migration:create": "node-pg-migrate --migrations-dir infra/migrations create",
     "migration:up": "node-pg-migrate --migrations-dir infra/migrations --envPath .env.development up",
-    "wait-for-postgres": "node infra/scripts/wait-for-postgres.js"
+    "wait-for-postgres": "node infra/scripts/wait-for-postgres.js",
+    "prepare": "husky"
   },
   "author": "",
   "license": "MIT",
@@ -37,6 +38,7 @@
     "eslint-config-next": "^14.2.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jest": "^28.6.0",
+    "husky": "^9.1.4",
     "jest": "^29.6.2",
     "next": "^14.2.3",
     "prettier": "^3.6.2"
