@@ -18,9 +18,7 @@
     "wait-for-postgres": "node infra/scripts/wait-for-postgres.js",
     "prepare": "husky",
     "commit": "cz",
-    "scan:staged": "gitleaks-secret-scanner",
-    "scan:all": "gitleaks-secret-scanner --diff-mode all",
-    "scan:history": "gitleaks-secret-scanner --diff-mode history"
+    "testt": "npx eslint . --ext .js,.jsx"
   },
   "author": "",
   "license": "MIT",
@@ -44,7 +42,7 @@
     "eslint-config-next": "^14.2.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jest": "^28.6.0",
-    "gitleaks-secret-scanner": "^1.2.2",
+    "eslint-plugin-no-secrets": "^2.2.1",
     "husky": "^9.1.4",
     "jest": "^29.6.2",
     "next": "^14.2.3",
