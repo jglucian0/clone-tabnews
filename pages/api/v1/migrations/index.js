@@ -4,7 +4,7 @@
 // Método .json() envia o charset automaticamente (utf-8)
 
 import migrationRunner from "node-pg-migrate";
-import { join } from "node:path";
+import { resolve } from "node:path";
 import database from "infra/database.js";
 // eslint-disable-next-line no-unused-vars
 import { channel } from "node:diagnostics_channel";
@@ -24,7 +24,7 @@ export default async function migrations(request, response) {
     const defaultMigrationOptions = {
       dbClient: dbClient,
       dryRun: true,
-      dir: join("infra", "migrations"),
+      dir: resolve(process.cwd(), "infra", "migrations"),
       direction: "up",
       verbose: true,
       migrationsTable: "pgmigrations",
@@ -35,7 +35,7 @@ export default async function migrations(request, response) {
         ...defaultMigrationOptions,
       });
 
-      return response.status(200).send(pendingMigrations);
+      return response.status(200).json(pendingMigrations);
     }
 
     if (request.method === "POST") {
