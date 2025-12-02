@@ -9,6 +9,26 @@
 
 .statusContainer {
   text-align: left;
+  width: 100%;
+}
+
+.statusContainer div {
+  font-size: 1rem;
+  margin: 0.3rem 0 0.3rem 0;
+}
+
+.statusContainer .hasBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  color: #4caf50;
+  border: 1px solid #4caf50;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .statusHeader h1 {

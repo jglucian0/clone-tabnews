@@ -24,15 +24,35 @@ export default function StatusPage() {
         <div className={styles.statusContainer}>
           <h2>Banco de Dados</h2>
           <div>
-            Status: <ServiceStatus />
+            <span>Status:</span>
+            <span className={styles.hasBadge}>
+              <ServiceStatus />
+            </span>
           </div>
           <div>
-            Última atualização: <LastUpdateTime />
+            <span>Conexões Máximas:</span>
+            <span className={styles.hasBadge}>
+              <MaxConnections />
+            </span>
           </div>
           <div>
-            Versão do PostgreSQL: <PostgresVersion />{" "}
+            <span>Conexões Abertas:</span>
+            <span className={styles.hasBadge}>
+              <OpenedConnections />
+            </span>
           </div>
-          {/* <div>Conexões Máximas: <RetrieveMaxConnextions /></div> */}
+          <div>
+            <span>Versão do PostgreSQL:</span>
+            <span className={styles.hasBadge}>
+              <PostgresVersion />
+            </span>
+          </div>
+          <div>
+            <span>Última atualização:</span>
+            <span className={styles.hasBadge}>
+              <LastUpdateTime />
+            </span>
+          </div>
         </div>
       </div>
     </>
@@ -51,6 +71,47 @@ function ServiceStatus() {
   return <span>{statusText}</span>;
 }
 
+function MaxConnections() {
+  const { isLoading, data, isOnline } = useStatusData();
+
+  if (isLoading) {
+    return <span>Carregando...</span>;
+  }
+
+  const maxConnections = data?.dependencies?.database?.max_connections;
+  const textMaxConnections =
+    isOnline && maxConnections ? maxConnections : "Indisponível";
+
+  return <span>{textMaxConnections}</span>;
+}
+
+function OpenedConnections() {
+  const { isLoading, data, isOnline } = useStatusData();
+
+  if (isLoading) {
+    return <span>Carregando...</span>;
+  }
+
+  const openedConnections = data?.dependencies?.database?.opened_connections;
+  const textOpenedConnections =
+    isOnline && openedConnections ? openedConnections : "Indisponnível";
+
+  return <span>{textOpenedConnections}</span>;
+}
+
+function PostgresVersion() {
+  const { isLoading, data, isOnline } = useStatusData();
+
+  if (isLoading) {
+    return <span>Carregando...</span>;
+  }
+
+  const version = data?.dependencies?.database?.version;
+  const versionText = isOnline && version ? version : "Indisponível";
+
+  return <span>v{versionText}</span>;
+}
+
 function LastUpdateTime() {
   const { isLoading, data, isOnline } = useStatusData();
 
@@ -66,17 +127,4 @@ function LastUpdateTime() {
   }
 
   return <span>{textUpdateTime}</span>;
-}
-
-function PostgresVersion() {
-  const { isLoading, data, isOnline } = useStatusData();
-
-  if (isLoading) {
-    return <span>Carregando...</span>;
-  }
-
-  const version = data?.dependencies?.database?.version;
-  const versionText = isOnline && version ? version : "Indisponível";
-
-  return <span>{versionText}</span>;
 }

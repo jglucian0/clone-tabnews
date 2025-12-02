@@ -54,6 +54,7 @@ function Badge({ text }) {
     <span
       style={{
         display: "inline-block",
+        width: "100%",
         background: "none",
         color: "#43c067",
         border: "1.5px solid #43c067",
