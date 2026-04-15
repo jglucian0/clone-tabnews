@@ -1,5 +1,7 @@
 import { version as uuidVersion } from "uuid";
 import orchestrator from "tests/orchestrator.js";
+import user from "models/user.js";
+import password from "models/password.js";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -29,7 +31,7 @@ describe("POST /api/v1/users", () => {
         id: responseBody.id,
         username: "jgluciano",
         email: "contato@jgluciano.dev",
-        password: "abc123",
+        password: responseBody.password,
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
       });
@@ -37,6 +39,19 @@ describe("POST /api/v1/users", () => {
       expect(uuidVersion(responseBody.id)).toBe(4);
       expect(Date.parse(responseBody.created_at)).not.toBeNaN();
       expect(Date.parse(responseBody.updated_at)).not.toBeNaN();
+
+      const userInDatabase = await user.findOneByUsername("jgluciano");
+      const correctPasswordMath = await password.compare(
+        "abc123",
+        userInDatabase.password,
+      );
+      expect(correctPasswordMath).toBe(true);
+
+      const incorrectPasswordMath = await password.compare(
+        "abc1234",
+        userInDatabase.password,
+      );
+      expect(incorrectPasswordMath).toBe(false);
     });
 
     test("With duplicated 'email'", async () => {
@@ -73,7 +88,7 @@ describe("POST /api/v1/users", () => {
       expect(response2Body).toEqual({
         name: "ValidationError",
         message: "O email informado já está sendo utilizado.",
-        action: "Utilize outro email para realizar o cadastro.",
+        action: "Utilize outro email para realizar esta operação.",
         status_code: 400,
       });
     });
@@ -110,7 +125,7 @@ describe("POST /api/v1/users", () => {
       expect(response2Body).toEqual({
         name: "ValidationError",
         message: "O nome de usuario informado já está sendo utilizado.",
-        action: "Utilize outro nome de usuario para realizar o cadastro.",
+        action: "Utilize outro nome de usuario para realizar esta operação.",
         status_code: 400,
       });
     });
