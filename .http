@@ -1,0 +1,24 @@
+@path = api/v1/users
+@username = jglucian0
+@email = jglucian0@jgluciano.dev
+@password = abc123
+
+# Registra um novo usuário no sistema
+POST https://clone-tabnews-abxkt47by-jglucianos-projects.vercel.app/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "{{username}}",
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+
+# Atualiza um novo usuário no sistema
+PATCH https://clone-tabnews-abxkt47by-jglucianos-projects.vercel.app/api/v1/users/jgluciano
+Content-Type: application/json
+
+{
+  "password": "{{password}}"
+}

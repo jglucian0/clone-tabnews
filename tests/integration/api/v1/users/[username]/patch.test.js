@@ -31,33 +31,13 @@ describe("PATCH /api/v1/users/[username]", () => {
     });
 
     test("With duplicate 'username'", async () => {
-      const user1Response = await fetch("http://localhost:3000/api/v1/users", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          username: "user1",
-          email: "user1@jgluciano.dev",
-          password: "abc123",
-        }),
+      await orchestrator.createuser({
+        username: "user1",
       });
 
-      expect(user1Response.status).toBe(201);
-
-      const user2Response = await fetch("http://localhost:3000/api/v1/users", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          username: "user2",
-          email: "user2@jgluciano.dev",
-          password: "abc123",
-        }),
+      await orchestrator.createuser({
+        username: "user2",
       });
-
-      expect(user2Response.status).toBe(201);
 
       const response = await fetch("http://localhost:3000/api/v1/users/user2", {
         method: "PATCH",
@@ -126,36 +106,16 @@ describe("PATCH /api/v1/users/[username]", () => {
     });
 
     test("With duplicate 'email'", async () => {
-      const email1Response = await fetch("http://localhost:3000/api/v1/users", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          username: "email1",
-          email: "email1@jgluciano.dev",
-          password: "abc123",
-        }),
+      await orchestrator.createuser({
+        email: "email1@jgluciano.dev",
       });
 
-      expect(email1Response.status).toBe(201);
-
-      const email2Response = await fetch("http://localhost:3000/api/v1/users", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          username: "email2",
-          email: "email2@jgluciano.dev",
-          password: "abc123",
-        }),
+      const createdUser2 = await orchestrator.createuser({
+        email: "email2@jgluciano.dev",
       });
-
-      expect(email2Response.status).toBe(201);
 
       const response = await fetch(
-        "http://localhost:3000/api/v1/users/email2",
+        `http://localhost:3000/api/v1/users/${createdUser2.username}`,
         {
           method: "PATCH",
           headers: { "Content-type": "application/json" },
