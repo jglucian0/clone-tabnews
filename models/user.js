@@ -33,6 +33,7 @@ async function findOneByUsername(username) {
 }
 
 async function create(userInputValues) {
+  await validatePassword(userInputValues.password);
   await validateUniqueUsername(userInputValues.username);
   await validateUniqueEmail(userInputValues.email);
   await hashPasswordInObject(userInputValues);
@@ -103,6 +104,15 @@ async function validateUniqueEmail(email) {
   }
 }
 
+async function validatePassword(password) {
+  if (!password || String(password).trim().length === 0) {
+    throw new ValidationError({
+      message: "O campo password é obrigatório.",
+      action: "Crie uma senha para realizar esta operação.",
+    });
+  }
+}
+
 async function hashPasswordInObject(userInputValues) {
   const hashedpassword = await password.hash(userInputValues.password);
 
@@ -124,6 +134,7 @@ async function update(username, userInputValues) {
   }
 
   if ("password" in userInputValues) {
+    await validatePassword(userInputValues.password);
     await hashPasswordInObject(userInputValues);
   }
 

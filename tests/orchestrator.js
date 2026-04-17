@@ -31,12 +31,12 @@ async function runPendingMigrations() {
   await migrator.runPendingMigrations();
 }
 
-async function createuser(userObject) {
+async function createUser(userObject) {
   return await user.create({
     username:
-      userObject.username || faker.internet.username().replace(/[_.-]/g, ""),
-    email: userObject.email || faker.internet.email(),
-    password: userObject.password || "validpassword",
+      userObject?.username || faker.internet.username().replace(/[_.-]/g, ""),
+    email: userObject?.email || faker.internet.email(),
+    password: userObject?.password || "validpassword",
   });
 }
 
@@ -44,7 +44,7 @@ const orchestrator = {
   waitForAllServices,
   clearDatabase,
   runPendingMigrations,
-  createuser,
+  createUser,
 };
 
 export default orchestrator;
