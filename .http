@@ -1,10 +1,20 @@
 @path = api/v1/users
-@username = jglucian0
-@email = jglucian0@jgluciano.dev
-@password = abc123
+@username = jgluciano
+@email = jgluciano@jgluciano.dev
+@password = abc123@
+
+# Verifica se há migrations a serem rodadas
+GET https://clone-tabnews-ibstq1hzy-jglucianos-projects.vercel.app/api/v1/migrations
+
+###
+
+# Rodas as migrations que estão abertas
+POST https://clone-tabnews-ibstq1hzy-jglucianos-projects.vercel.app/api/v1/migrations
+
+###
 
 # Registra um novo usuário no sistema
-POST https://clone-tabnews-abxkt47by-jglucianos-projects.vercel.app/api/v1/users
+POST https://clone-tabnews-ibstq1hzy-jglucianos-projects.vercel.app/api/v1/users
 Content-Type: application/json
 
 {
@@ -20,5 +30,16 @@ PATCH https://clone-tabnews-abxkt47by-jglucianos-projects.vercel.app/api/v1/user
 Content-Type: application/json
 
 {
+  "password": "{{password}}"
+}
+
+###
+
+# Registra uma nova sessão e da um set-cookie
+POST https://clone-tabnews-ibstq1hzy-jglucianos-projects.vercel.app/api/v1/sessions
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
   "password": "{{password}}"
 }
