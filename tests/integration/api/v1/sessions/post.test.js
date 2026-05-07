@@ -129,7 +129,7 @@ describe("POST /api/v1/sessions", () => {
       expiresAt.setMilliseconds(0);
       createdAt.setMilliseconds(0);
 
-      expect(expiresAt - createdAt).toBe(session.EXPIRETION_IN_MILLISECONDS);
+      expect(expiresAt - createdAt).toBe(session.EXPIRATION_IN_MILLISECONDS);
 
       expect(uuidVersion(responseBody.id)).toBe(4);
       expect(Date.parse(responseBody.expires_at)).not.toBeNaN();
@@ -143,7 +143,7 @@ describe("POST /api/v1/sessions", () => {
       expect(parsedSetCookie.session_id).toEqual({
         name: "session_id",
         value: responseBody.token,
-        maxAge: session.EXPIRETION_IN_MILLISECONDS / 1000,
+        maxAge: session.EXPIRATION_IN_MILLISECONDS / 1000,
         path: "/",
         httpOnly: true,
       });
